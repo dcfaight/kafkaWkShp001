@@ -3,6 +3,7 @@ package com.dcfaight.kafkawkshp001.kafka.producer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.web.util.HtmlUtils;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,7 +31,7 @@ public class KafkaProducerController {
     @PostMapping("/send/{key}")
     public String sendWithKey(@PathVariable String key, @RequestBody String message) throws Exception {
         var result = kafkaTemplate.send(topic, key, message).get();
-        return "sent key=" + key +
+        return "sent key=" + HtmlUtils.htmlEscape(key) +
                 " partition=" + result.getRecordMetadata().partition() +
                 " offset=" + result.getRecordMetadata().offset();
     }
@@ -41,6 +42,6 @@ public class KafkaProducerController {
             @PathVariable String key,
             @RequestBody String value) {
         kafkaTemplate.send(topic, key, value);
-        return ResponseEntity.ok("Message sent to " + topic + "!");
+        return ResponseEntity.ok("Message sent to " + HtmlUtils.htmlEscape(topic) + "!");
     }
 }
