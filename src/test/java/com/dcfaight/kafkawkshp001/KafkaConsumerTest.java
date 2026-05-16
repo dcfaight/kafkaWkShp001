@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
+import java.lang.reflect.Method;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
@@ -202,5 +205,22 @@ class KafkaConsumerTest {
 
         verify(elasticClient).writeToElasticsearch(anyString());
         verify(service).save(Mockito.any());
+    }
+
+    @Test
+    void mapEventToEntity_allowsMissingTimestampWhenInvokedDirectly() throws Exception {
+        Method method = KafkaConsumer.class.getDeclaredMethod("mapEventToEntity", Map.class);
+        method.setAccessible(true);
+
+        FirewallEvent entity = (FirewallEvent) method.invoke(consumer, Map.of(
+                "srcIp", "10.10.0.1",
+                "dstIp", "10.10.0.2",
+                "action", "ALLOW"
+        ));
+
+        assertEquals(null, entity.getTimestamp());
+        assertEquals("10.10.0.1", entity.getSrcIp());
+        assertEquals("10.10.0.2", entity.getDstIp());
+        assertEquals("ALLOW", entity.getAction());
     }
 }
