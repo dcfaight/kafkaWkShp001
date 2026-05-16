@@ -132,4 +132,24 @@ class KafkaConsumerTest {
         verify(elasticClient).writeToElasticsearch(anyString());
         verify(service, never()).save(Mockito.any());
     }
+
+    @Test
+    void processEvent_continuesWhenElasticsearchWriteFails() {
+        Mockito.doThrow(new RuntimeException("es down"))
+                .when(elasticClient).writeToElasticsearch(anyString());
+
+        consumer.processEvent("""
+                {
+                  "@timestamp":"2026-05-16T12:00:00Z",
+                  "src_ip":"10.10.0.1",
+                  "dst_ip":"10.10.0.2",
+                  "src_port":1234,
+                  "dst_port":443,
+                  "action":"DENY"
+                }
+                """);
+
+        verify(elasticClient).writeToElasticsearch(anyString());
+        verify(service).save(Mockito.any());
+    }
 }
