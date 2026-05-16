@@ -67,4 +67,15 @@ class ElasticClientTest {
 
         assertDoesNotThrow(() -> client.writeToElasticsearch("{\"k\":\"v\"}"));
     }
+
+    @Test
+    void writeToElasticsearch_handlesHttpClientException() throws Exception {
+        HttpClient httpClient = mock(HttpClient.class);
+        when(httpClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
+                .thenThrow(new IOException("network down"));
+
+        ElasticClient client = new ElasticClient(httpClient, "http://localhost:9200/index/_doc");
+
+        assertDoesNotThrow(() -> client.writeToElasticsearch("{\"k\":\"v\"}"));
+    }
 }
