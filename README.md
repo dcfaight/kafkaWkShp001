@@ -1,6 +1,8 @@
-# KafkaWkShp001
+# Spring Boot Kafka Backend & Go Ingestion Utility
 
-A Java/Spring Boot backend for producing and consuming Kafka topics, with a standalone Go utility for ingesting firewall events into Elasticsearch.
+Java 21 and Spring Boot 4 backend showcasing Apache Kafka producer/consumer flows, dead-letter queue behavior, and REST endpoints for exercising event-driven workflows.
+
+Includes a standalone Go utility that consumes Kafka firewall events and indexes them into Elasticsearch.
 
 ## Tech stack
 
