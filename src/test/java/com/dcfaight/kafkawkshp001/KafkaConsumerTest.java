@@ -134,6 +134,57 @@ class KafkaConsumerTest {
     }
 
     @Test
+    void processEvent_ignoresMissingTimestamp() {
+        consumer.processEvent("""
+                {"src_ip":"1.1.1.1","dst_ip":"2.2.2.2","action":"DENY"}
+                """);
+
+        verify(elasticClient, never()).writeToElasticsearch(anyString());
+        verify(service, never()).save(Mockito.any());
+    }
+
+    @Test
+    void processEvent_ignoresMissingSrcIp() {
+        consumer.processEvent("""
+                {"timestamp":"2026-05-16T12:00:00Z","dst_ip":"2.2.2.2","action":"DENY"}
+                """);
+
+        verify(elasticClient, never()).writeToElasticsearch(anyString());
+        verify(service, never()).save(Mockito.any());
+    }
+
+    @Test
+    void processEvent_ignoresMissingAction() {
+        consumer.processEvent("""
+                {"@timestamp":"2026-05-16T12:00:00Z","src_ip":"1.1.1.1","dst_ip":"2.2.2.2"}
+                """);
+
+        verify(elasticClient, never()).writeToElasticsearch(anyString());
+        verify(service, never()).save(Mockito.any());
+    }
+
+    @Test
+    void processEvent_mapsEventWithNullPorts() {
+        FirewallEvent saved = new FirewallEvent();
+        saved.setId(5L);
+        Mockito.when(service.save(Mockito.any(FirewallEvent.class))).thenReturn(saved);
+
+        consumer.processEvent("""
+                {
+                  "@timestamp":"2026-05-16T12:00:00Z",
+                  "src_ip":"10.0.0.1",
+                  "dst_ip":"10.0.0.2",
+                  "action":"ALLOW"
+                }
+                """);
+
+        ArgumentCaptor<FirewallEvent> captor = ArgumentCaptor.forClass(FirewallEvent.class);
+        verify(service).save(captor.capture());
+        assertEquals(null, captor.getValue().getSrcPort());
+        assertEquals(null, captor.getValue().getDstPort());
+    }
+
+    @Test
     void processEvent_continuesWhenElasticsearchWriteFails() {
         Mockito.doThrow(new RuntimeException("es down"))
                 .when(elasticClient).writeToElasticsearch(anyString());

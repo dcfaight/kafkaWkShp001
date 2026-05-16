@@ -22,6 +22,16 @@ class KafkaListenerConfigTest {
     }
 
     @Test
+    void resolveDestination_delegatesToDlqPartition() {
+        ConsumerRecord<String, String> record = new ConsumerRecord<>("firewall.logs.raw", 2, 0L, "k", "v");
+
+        TopicPartition partition = KafkaListenerConfig.resolveDestination(record, new RuntimeException("err"));
+
+        assertEquals("firewall.logs.raw.dlq", partition.topic());
+        assertEquals(2, partition.partition());
+    }
+
+    @Test
     void dlqPartition_appendsDlqSuffix() {
         ConsumerRecord<String, String> record = new ConsumerRecord<>("firewall.logs.raw", 2, 0L, "k", "v");
 

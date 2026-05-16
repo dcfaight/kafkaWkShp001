@@ -7,9 +7,15 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class HashDemoTest {
+
+    @Test
+    void constructor_canBeInstantiated() {
+        assertNotNull(new HashDemo());
+    }
 
     @Test
     void main_printsThreePositiveIntegers() {

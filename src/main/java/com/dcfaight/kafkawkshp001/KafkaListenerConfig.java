@@ -16,14 +16,13 @@ public class KafkaListenerConfig {
     public DefaultErrorHandler errorHandler(KafkaTemplate<Object, Object> kafkaTemplate) {
         DeadLetterPublishingRecoverer recoverer = new DeadLetterPublishingRecoverer(
                 kafkaTemplate,
-                (record, ex) -> dlqPartition(record)
+                KafkaListenerConfig::resolveDestination
         );
-        DefaultErrorHandler errorHandler = new DefaultErrorHandler(
-                recoverer,
-                new FixedBackOff(0L, 0)
-        );
-        return errorHandler;
+        return new DefaultErrorHandler(recoverer, new FixedBackOff(0L, 0));
+    }
 
+    static TopicPartition resolveDestination(ConsumerRecord<?, ?> record, Exception ex) {
+        return dlqPartition(record);
     }
 
     static TopicPartition dlqPartition(ConsumerRecord<?, ?> record) {
