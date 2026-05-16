@@ -30,7 +30,7 @@ public class KafkaListenerConfig {
             System.out.println("DLQ HANDLER: Failed record will go to DLQ: key=" + record.key() + " val=" + record.value() + " reason=" + ex);
         });
 
-        return new DefaultErrorHandler(recoverer, new FixedBackOff(0L, 0));
+        return errorHandler;
 
         // 3 retries, then DLQ
     }

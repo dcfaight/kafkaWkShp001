@@ -16,13 +16,12 @@ public class FirewallEventService {
 
     public FirewallEvent save(FirewallEvent event) {
         log.info("Saving FirewallEvent: {}", event);
-FirewallEvent saved = null;
+        FirewallEvent saved = null;
         try {
             saved = repository.save(event);
-
-        log.info("Saved FirewallEvent with ID: {}", saved.getId());
-        }catch(Exception ex){
-            System.out.println("problem with save in service class!");
+            log.info("Saved FirewallEvent with ID: {}", saved.getId());
+        } catch (Exception ex) {
+            log.error("Problem saving firewall event", ex);
         }
         return saved;
 

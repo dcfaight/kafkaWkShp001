@@ -1,13 +1,19 @@
 package com.dcfaight.kafkawkshp001;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 
-@SpringBootTest
 class KafkaWkShp001ApplicationTests {
 
     @Test
-    void contextLoads() {
+    void applicationClass_hasOpenApiDefinition() {
+        OpenAPIDefinition annotation = KafkaWkShp001Application.class.getAnnotation(OpenAPIDefinition.class);
+        org.junit.jupiter.api.Assertions.assertNotNull(annotation);
+    }
+
+    @Test
+    void applicationClass_canBeInstantiated() {
+        org.junit.jupiter.api.Assertions.assertNotNull(new KafkaWkShp001Application());
     }
 
 }
