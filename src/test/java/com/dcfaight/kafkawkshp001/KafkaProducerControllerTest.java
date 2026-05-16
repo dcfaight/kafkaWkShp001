@@ -12,8 +12,10 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -57,6 +59,16 @@ class KafkaProducerControllerTest {
         verify(kafkaTemplate).send("custom-topic", "my-key", "payload");
         assertEquals(200, response.getStatusCode().value());
         assertEquals("Message sent to custom-topic!", response.getBody());
+    }
+
+    @Test
+    void send_propagatesKafkaSendFailure() {
+        CompletableFuture<SendResult<String, String>> failed = new CompletableFuture<>();
+        failed.completeExceptionally(new IllegalStateException("kafka unavailable"));
+        when(kafkaTemplate.send("firewall.logs.raw", "hello")).thenReturn(failed);
+
+        ExecutionException exception = assertThrows(ExecutionException.class, () -> controller.send("hello"));
+        assertEquals("kafka unavailable", exception.getCause().getMessage());
     }
 
     private SendResult<String, String> sendResult(String topic, String key, String value, int partition, long offset) {

@@ -38,6 +38,8 @@ class ElasticClientTest {
         ArgumentCaptor<HttpRequest> requestCaptor = ArgumentCaptor.forClass(HttpRequest.class);
         verify(httpClient).send(requestCaptor.capture(), any(HttpResponse.BodyHandler.class));
         assertEquals("http://localhost:9200/index/_doc", requestCaptor.getValue().uri().toString());
+        assertEquals("POST", requestCaptor.getValue().method());
+        assertEquals("application/json", requestCaptor.getValue().headers().firstValue("Content-Type").orElse(null));
     }
 
     @Test
