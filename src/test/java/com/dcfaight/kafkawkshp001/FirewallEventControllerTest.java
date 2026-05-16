@@ -68,7 +68,7 @@ class FirewallEventControllerTest {
 
         mockMvc.perform(get("/firewall-events"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].timestamp").value(firstTs.toString()))
+                .andExpect(jsonPath("$[0].timestamp").value("2026-05-16T08:00:00Z"))
                 .andExpect(jsonPath("$[0].srcIp").value("10.0.0.1"))
                 .andExpect(jsonPath("$[0].dstIp").value("10.0.0.2"))
                 .andExpect(jsonPath("$[0].srcPort").value(12345))
@@ -76,7 +76,7 @@ class FirewallEventControllerTest {
                 .andExpect(jsonPath("$[0].action").value("ALLOW"))
                 .andExpect(jsonPath("$[0].deviceId").value("fw-a"))
                 .andExpect(jsonPath("$[0].message").value("http allow"))
-                .andExpect(jsonPath("$[1].timestamp").value(secondTs.toString()))
+                .andExpect(jsonPath("$[1].timestamp").value("2026-05-16T09:00:00Z"))
                 .andExpect(jsonPath("$[1].srcIp").value("10.0.0.3"))
                 .andExpect(jsonPath("$[1].dstIp").value("10.0.0.4"))
                 .andExpect(jsonPath("$[1].srcPort").value(54321))
