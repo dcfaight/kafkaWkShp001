@@ -1,0 +1,31 @@
+### Create index with mapping
+PUT http://192.168.1.5:9200/firewall-events-000001
+Content-Type: application/json
+
+{
+  "mappings": {
+    "properties": {
+      "@timestamp": { "type": "date" },
+      "src_ip":     { "type": "ip" },
+      "dst_ip":     { "type": "ip" },
+      "src_port":   { "type": "integer" },
+      "dst_port":   { "type": "integer" },
+      "action":     { "type": "keyword" },
+      "device_id":  { "type": "keyword" },
+      "message":    { "type": "text" }
+    }
+  }
+}
+
+### Verify mapping
+GET http://192.168.1.5:9200/firewall-events-000001/_mapping
+
+#### Bulk insert firewall events
+
+POST http://192.168.1.5:9200/firewall-events-000001/_bulk
+Content-Type: application/x-ndjson
+
+{ "index": {} }
+{ "@timestamp": "2026-04-26T15:01:00Z", "src_ip": "1.1.1.1", "dst_ip": "2.2.2.2", "src_port": 10000, "dst_port": 80, "action": "BLOCK", "device_id": "fw01", "message": "test doc" }
+
+
