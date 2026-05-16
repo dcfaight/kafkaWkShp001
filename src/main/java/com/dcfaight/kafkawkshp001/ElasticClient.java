@@ -10,10 +10,19 @@ import java.net.http.HttpResponse;
 
 public class ElasticClient {
     private static final Logger log = LoggerFactory.getLogger(KafkaConsumer.class);
+    private final String elasticUrl;
+    private final HttpClient client;
+
+    public ElasticClient() {
+        this(HttpClient.newHttpClient(), "http://192.168.1.5:9200/firewall-events-000001/_doc");
+    }
+
+    ElasticClient(HttpClient client, String elasticUrl) {
+        this.client = client;
+        this.elasticUrl = elasticUrl;
+    }
 
     public void writeToElasticsearch(String eventJson) {
-        String elasticUrl = "http://192.168.1.5:9200/firewall-events-000001/_doc";
-        HttpClient client = HttpClient.newHttpClient();
         HttpResponse<String> response = null;
 
         try {
@@ -35,10 +44,6 @@ public class ElasticClient {
         } catch (Exception e) {
             log.error("Exception writing to Elasticsearch!", e);
             log.error("Event JSON: {}", eventJson);
-            if (response != null) {
-                log.error("Partial/failed ES response status: {}", response.statusCode());
-                log.error("Partial/failed ES response body: {}", response.body());
-            }
         }
     }
 }
