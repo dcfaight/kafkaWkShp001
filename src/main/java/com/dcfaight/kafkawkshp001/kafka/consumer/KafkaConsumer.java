@@ -1,10 +1,13 @@
-package com.dcfaight.kafkawkshp001;
+package com.dcfaight.kafkawkshp001.kafka.consumer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.dcfaight.kafkawkshp001.elasticsearch.ElasticClient;
+import com.dcfaight.kafkawkshp001.firewall.domain.FirewallEvent;
+import com.dcfaight.kafkawkshp001.firewall.service.FirewallEventService;
 
 import java.time.OffsetDateTime;
 import java.util.Map;

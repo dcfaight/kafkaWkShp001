@@ -1,5 +1,6 @@
-package com.dcfaight.kafkawkshp001;
+package com.dcfaight.kafkawkshp001.firewall.domain;
 
+import com.dcfaight.kafkawkshp001.firewall.dto.FirewallEventDTO;
 import org.junit.jupiter.api.Test;
 
 import java.time.OffsetDateTime;

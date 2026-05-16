@@ -1,4 +1,4 @@
-package com.dcfaight.kafkawkshp001.utils;
+package com.dcfaight.kafkawkshp001.util;
 
 import org.junit.jupiter.api.Test;
 

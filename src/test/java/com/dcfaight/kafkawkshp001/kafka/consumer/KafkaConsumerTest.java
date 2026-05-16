@@ -1,6 +1,9 @@
-package com.dcfaight.kafkawkshp001;
+package com.dcfaight.kafkawkshp001.kafka.consumer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.dcfaight.kafkawkshp001.elasticsearch.ElasticClient;
+import com.dcfaight.kafkawkshp001.firewall.domain.FirewallEvent;
+import com.dcfaight.kafkawkshp001.firewall.service.FirewallEventService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;

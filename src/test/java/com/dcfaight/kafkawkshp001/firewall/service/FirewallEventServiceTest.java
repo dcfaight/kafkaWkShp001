@@ -1,5 +1,7 @@
-package com.dcfaight.kafkawkshp001;
+package com.dcfaight.kafkawkshp001.firewall.service;
 
+import com.dcfaight.kafkawkshp001.firewall.domain.FirewallEvent;
+import com.dcfaight.kafkawkshp001.firewall.persistence.FirewallEventRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

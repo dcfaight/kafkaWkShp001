@@ -1,7 +1,10 @@
-package com.dcfaight.kafkawkshp001;
+package com.dcfaight.kafkawkshp001.firewall.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.dcfaight.kafkawkshp001.firewall.domain.FirewallEvent;
+import com.dcfaight.kafkawkshp001.firewall.dto.FirewallEventDTO;
+import com.dcfaight.kafkawkshp001.firewall.service.FirewallEventService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;

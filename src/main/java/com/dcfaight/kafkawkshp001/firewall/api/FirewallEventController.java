@@ -1,10 +1,14 @@
-package com.dcfaight.kafkawkshp001;
+package com.dcfaight.kafkawkshp001.firewall.api;
 
+import com.dcfaight.kafkawkshp001.firewall.domain.FirewallEvent;
+import com.dcfaight.kafkawkshp001.firewall.dto.FirewallEventDTO;
+import com.dcfaight.kafkawkshp001.firewall.mapper.FirewallEventMapper;
+import com.dcfaight.kafkawkshp001.firewall.service.FirewallEventService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/firewall-events")

@@ -1,4 +1,4 @@
-package com.dcfaight.kafkawkshp001;
+package com.dcfaight.kafkawkshp001.firewall.domain;
 
 import jakarta.persistence.*;
 import lombok.*;

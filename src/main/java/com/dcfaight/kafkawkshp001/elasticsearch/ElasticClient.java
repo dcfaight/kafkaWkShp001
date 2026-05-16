@@ -1,4 +1,4 @@
-package com.dcfaight.kafkawkshp001;
+package com.dcfaight.kafkawkshp001.elasticsearch;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +9,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class ElasticClient {
-    private static final Logger log = LoggerFactory.getLogger(KafkaConsumer.class);
+    private static final Logger log = LoggerFactory.getLogger(ElasticClient.class);
     private final String elasticUrl;
     private final HttpClient client;
 

@@ -1,4 +1,4 @@
-package com.dcfaight.kafkawkshp001;
+package com.dcfaight.kafkawkshp001.firewall.dto;
 
 import java.time.OffsetDateTime;
 

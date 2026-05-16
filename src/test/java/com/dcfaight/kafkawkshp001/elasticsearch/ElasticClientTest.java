@@ -1,4 +1,4 @@
-package com.dcfaight.kafkawkshp001;
+package com.dcfaight.kafkawkshp001.elasticsearch;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;

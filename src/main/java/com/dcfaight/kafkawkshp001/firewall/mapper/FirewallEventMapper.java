@@ -1,4 +1,7 @@
-package com.dcfaight.kafkawkshp001;
+package com.dcfaight.kafkawkshp001.firewall.mapper;
+
+import com.dcfaight.kafkawkshp001.firewall.domain.FirewallEvent;
+import com.dcfaight.kafkawkshp001.firewall.dto.FirewallEventDTO;
 
 public class FirewallEventMapper {
     public static FirewallEvent toEntity(FirewallEventDTO dto) {
