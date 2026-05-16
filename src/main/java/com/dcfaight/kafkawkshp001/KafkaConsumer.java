@@ -98,12 +98,12 @@ public class KafkaConsumer {
         entity.setDstIp((String) event.getOrDefault("dst_ip", event.get("dstIp")));
         entity.setAction((String) event.get("action"));
         entity.setSrcPort(
-                event.get("src_port") != null ? Integer.parseInt(event.get("src_port").toString()) :
-                        event.get("srcPort") != null ? Integer.parseInt(event.get("srcPort").toString()) : null
+                event.get("src_port") != null ? Integer.valueOf(event.get("src_port").toString()) :
+                        event.get("srcPort") != null ? Integer.valueOf(event.get("srcPort").toString()) : null
         );
         entity.setDstPort(
-                event.get("dst_port") != null ? Integer.parseInt(event.get("dst_port").toString()) :
-                        event.get("dstPort") != null ? Integer.parseInt(event.get("dstPort").toString()) : null
+                event.get("dst_port") != null ? Integer.valueOf(event.get("dst_port").toString()) :
+                        event.get("dstPort") != null ? Integer.valueOf(event.get("dstPort").toString()) : null
         );
         entity.setDeviceId((String) event.getOrDefault("device_id", event.get("deviceId")));
         entity.setMessage((String) event.get("message"));

@@ -56,10 +56,12 @@ class ElasticClientTest {
     }
 
     @Test
-    void writeToElasticsearch_handlesHttpClientException() throws Exception {
+    void writeToElasticsearch_handlesStatusBelow200() throws Exception {
         HttpClient httpClient = mock(HttpClient.class);
-        when(httpClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
-                .thenThrow(new IOException("connection refused"));
+        HttpResponse<String> response = mock(HttpResponse.class);
+        when(response.statusCode()).thenReturn(100);
+        when(response.body()).thenReturn("continue");
+        when(httpClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class))).thenReturn(response);
 
         ElasticClient client = new ElasticClient(httpClient, "http://localhost:9200/index/_doc");
 
