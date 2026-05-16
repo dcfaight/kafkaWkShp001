@@ -1,4 +1,4 @@
-package com.dcfaight.kafkawkshp001.networkevents;
+package com.dcfaight.kafkawkshp001.networkEvents;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
