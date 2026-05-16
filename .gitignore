@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Go build artifacts ###
+tools/go-firewall-pipeline/go-firewall-pipeline
+tools/go-firewall-pipeline/go-firewall-pipeline.exe
+tools/go-firewall-pipeline/cover.out
