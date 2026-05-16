@@ -9,6 +9,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class FirewallEventMapperTest {
 
     @Test
+    void mapperClass_canBeInstantiated() {
+        FirewallEventMapper mapper = new FirewallEventMapper();
+        org.junit.jupiter.api.Assertions.assertNotNull(mapper);
+    }
+
+    @Test
     void toEntity_mapsAllFields() {
         OffsetDateTime timestamp = OffsetDateTime.parse("2026-05-16T10:15:30+00:00");
 

@@ -64,9 +64,8 @@ class KafkaProducerControllerTest {
         RecordMetadata metadata = new RecordMetadata(
                 new TopicPartition(topic, partition),
                 0L,
-                offset,
+                (int) offset,
                 System.currentTimeMillis(),
-                0,
                 0,
                 0
         );

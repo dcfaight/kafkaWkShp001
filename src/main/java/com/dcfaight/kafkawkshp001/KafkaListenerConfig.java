@@ -16,22 +16,17 @@ public class KafkaListenerConfig {
     public DefaultErrorHandler errorHandler(KafkaTemplate<Object, Object> kafkaTemplate) {
         DeadLetterPublishingRecoverer recoverer = new DeadLetterPublishingRecoverer(
                 kafkaTemplate,
-                (record, ex) -> {
-                    // Route DLQs: "firewall.logs.raw" → "firewall.logs.raw.dlq"
-                    String dlqTopic = record.topic() + ".dlq";
-                    return new TopicPartition(dlqTopic, record.partition());
-                }
+                (record, ex) -> dlqPartition(record)
         );
         DefaultErrorHandler errorHandler = new DefaultErrorHandler(
                 recoverer,
                 new FixedBackOff(0L, 0)
         );
-        errorHandler.setRetryListeners((record, ex, deliveryAttempt) -> {
-            System.out.println("DLQ HANDLER: Failed record will go to DLQ: key=" + record.key() + " val=" + record.value() + " reason=" + ex);
-        });
-
         return errorHandler;
 
-        // 3 retries, then DLQ
+    }
+
+    static TopicPartition dlqPartition(ConsumerRecord<?, ?> record) {
+        return new TopicPartition(record.topic() + ".dlq", record.partition());
     }
 }

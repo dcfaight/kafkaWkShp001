@@ -7,7 +7,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.never;
@@ -24,6 +23,12 @@ class KafkaConsumerTest {
         service = Mockito.mock(FirewallEventService.class);
         elasticClient = Mockito.mock(ElasticClient.class);
         consumer = new KafkaConsumer(new ObjectMapper(), service, Runnable::run, elasticClient);
+    }
+
+    @Test
+    void defaultConstructor_canBeCreated() {
+        KafkaConsumer defaultConsumer = new KafkaConsumer(new ObjectMapper(), service);
+        org.junit.jupiter.api.Assertions.assertNotNull(defaultConsumer);
     }
 
     @Test

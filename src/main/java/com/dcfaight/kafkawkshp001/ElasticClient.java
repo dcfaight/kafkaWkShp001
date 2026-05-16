@@ -44,10 +44,6 @@ public class ElasticClient {
         } catch (Exception e) {
             log.error("Exception writing to Elasticsearch!", e);
             log.error("Event JSON: {}", eventJson);
-            if (response != null) {
-                log.error("Partial/failed ES response status: {}", response.statusCode());
-                log.error("Partial/failed ES response body: {}", response.body());
-            }
         }
     }
 }
